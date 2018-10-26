@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hitsme.springboot.demo.demo.dao.UserMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="UserResultMap" type="com.hitsme.springboot.demo.demo.entity.User">
+        <id column="id" property="id"/>
+        <id column="user_name" property="userName"/>
+        <id column="password" property="password"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        user_name,
+        password
+    </sql>
+
+    <select id="selectOne" resultMap="UserResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM user2
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectList" resultMap="UserResultMap" parameterType="com.hitsme.springboot.demo.demo.entity.User">
+        SELECT <include refid="Base_Column_List"/>
+        FROM user2
+        WHERE 1=1
+        <if test="id != null and id != ''">
+            AND id = #{id}
+        </if>
+        <if test="userName != null and userName != ''">
+            AND user_name = #{userName}
+        </if>
+        <if test="password != null and password != ''">
+            AND password = #{password}
+        </if>
+    </select>
+
+
+</mapper>
